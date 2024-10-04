@@ -1,0 +1,188 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Status {
+  PAID
+  UNPAID
+  CANCELLED
+}
+
+model User {
+  id       String @id @default(uuid())
+  username String
+  email    String @unique
+  password String
+  role     Role   @default(USER)
+
+  createdAt DateTime @default(now())
+}
+
+// employee
+
+model Employee {
+  id        String   @id @default(uuid())
+  name      String
+  email     String?
+  address   String
+  phone     String
+  salary    Salary[]
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+}
+
+// salary
+
+model Salary {
+  id        String @id @default(uuid())
+  amount    Float
+  horumarin Float
+
+  employeeId String
+  employee   Employee @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  total      Float
+
+  salary_date DateTime
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @updatedAt
+}
+
+// Elevators
+model SmallElevator {
+  id          String @id @default(uuid())
+  customer    String
+  description String
+  price       Float
+  receipt_no  String
+
+  small_date DateTime
+  createdAt  DateTime @default(now())
+  updateAt   DateTime @updatedAt
+}
+
+model MiddleElevator {
+  id          String @id @default(uuid())
+  customer    String
+  description String
+  price       Float
+  receipt_no  String
+
+  middle_date DateTime
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @updatedAt
+}
+
+model LargeElevator {
+  id          String @id @default(uuid())
+  customer    String
+  description String
+  price       Float
+  receipt_no  String
+
+  large_date DateTime
+  createdAt  DateTime @default(now())
+  updateAt   DateTime @updatedAt
+}
+
+// Final Table
+
+model Expense1 {
+  id           String   @id @default(uuid())
+  fuel         Float
+  shaxaad      Float
+  waterLayadh  Float
+  internet     Float
+  salary       Float
+  expenses     Float
+  description  String
+  total        Float
+  netIncome    Float
+  expense_date DateTime
+
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+}
+
+model Expense2 {
+  id           String   @id @default(uuid())
+  oil          Float
+  dayactir     Float
+  spareParts   Float
+  smallExpense Float
+  description  String
+  netTotal     Float
+  expense_date DateTime
+
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+}
+
+model FinalTable {
+  id     String @id @default(uuid())
+  crane1 Float
+  crane2 Float
+  crane3 Float
+  total  Float
+
+  sales_date DateTime
+  createdAt  DateTime @default(now())
+  updateAt   DateTime @updatedAt
+}
+
+model InvoiceTable {
+  id          String @id @default(uuid())
+  customer    String
+  description String
+  price       Float
+  receipt_no  String
+  status      Status @default(UNPAID)
+
+  invoice_date DateTime
+
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+}
+
+model Debts {
+  id          String @id @default(uuid())
+  company     String
+  description String
+  amount      Float
+
+  debt_date DateTime
+
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+}
+
+model monthExpenses {
+  id            String   @id @default(uuid())
+  expenses1     Float
+  feePercentage Float
+  salary        Float
+  expenses2     Float
+  subTotal1     Float
+  subTotal2     Float
+  sales         Float
+  date          DateTime
+  total         Float
+
+  createdAt DateTime @default(now())
+  updateAt  DateTime @updatedAt
+}

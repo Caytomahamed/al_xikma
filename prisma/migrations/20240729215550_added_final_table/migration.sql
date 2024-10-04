@@ -1,0 +1,11 @@
+-- CreateTable
+CREATE TABLE "FinalTable" (
+    "id" TEXT NOT NULL,
+    "crane1" DOUBLE PRECISION NOT NULL,
+    "crane2" DOUBLE PRECISION NOT NULL,
+    "crane3" DOUBLE PRECISION NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updateAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "FinalTable_pkey" PRIMARY KEY ("id")
+);
